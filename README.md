@@ -4,168 +4,109 @@ This repository contains the mission-control software developed for my final yea
 
 **Medical Drone for Critical Supply Transport**
 
-The project explores how a Raspberry Pi and Pixhawk-based drone can be used for medical-payload delivery through different levels of mission automation.
-
-Rather than using only one control philosophy, this repository includes **three software variants**, each representing a different level of operator involvement during takeoff, mission execution, and landing.
+The project explores how a Raspberry Pi and Pixhawk-based drone can be used for medical payload delivery through different levels of automation and operator involvement.
 
 ---
 
 ## Project overview
 
-The purpose of this project is to develop a medical-delivery drone prototype capable of performing guided mission tasks such as:
+The aim of this project is to develop a practical medical-delivery drone prototype capable of:
 
 - GPS-based mission travel
 - dead reckoning mission travel
 - payload release
-- mission monitoring through GUI
+- mission monitoring through a GUI
 - return-to-start or mission completion logic
 
-The project is built around a **Pixhawk + Raspberry Pi architecture**, where Pixhawk handles flight-controller functions and Raspberry Pi handles higher-level mission logic and interface behaviour.
+The software is built around a **Pixhawk + Raspberry Pi architecture**:
+
+- **Pixhawk** handles flight stabilisation and core flight-controller behaviour
+- **Raspberry Pi** handles mission logic, telemetry display, GUI interaction, payload control, and software-side mission flow
 
 ---
 
 ## Software versions
 
-This repository contains three main versions of the mission software.
+This repository contains three main mission-control styles.
 
 ### Version 1 — Simplest Version
-This is the most basic and easiest-to-operate version.
+This is the simplest and most pilot-supervised version.
 
-#### Mission style
+#### Mission flow
 - **Manual takeoff**
+- once airborne, the mission is started using the GUI
+- mission travel is then handled by the software
 - **Manual landing**
-- After takeoff, the operator enables the mission through the GUI
-- The GUI then handles the selected mission logic
 
 #### Main idea
-This version keeps the pilot responsible for the most critical flight phases while still allowing mission automation after stable flight is achieved.
-
-#### Best use
-- early testing
-- safer operator-supervised missions
-- validation of mission logic with pilot involvement
+The pilot remains responsible for the most critical phases of flight, while the software handles mission execution after the aircraft is already safely in the air.
 
 ---
 
 ### Version 2 — Fully Automated Raspberry Pi Version
-This version is the most automated version in the repository.
+This is the most automated version.
 
-#### Mission style
-- Mission started from the GUI
+#### Mission flow
+- mission is started from the GUI
 - **Automatic takeoff**
 - **Automatic mission execution**
 - **Automatic landing**
-- Raspberry Pi carries out the full mission flow
 
 #### Main idea
-This version reduces the need for continuous operator involvement and explores a more autonomous delivery workflow.
-
-#### Best use
-- research into higher automation
-- comparison against manual-assisted mission modes
-- full mission sequencing experiments
+This version explores a more fully autonomous workflow where the Raspberry Pi handles the complete mission sequence.
 
 #### Note
-This version is more advanced and should be treated as the most automation-heavy implementation.
+This version is more experimental because it reduces pilot involvement significantly.
 
 ---
 
 ### Version 3 — Altitude-Gated Mission Start Version
-This is the most versatile and practical version for mixed human/autonomous operation.
+This is the most versatile hybrid version.
 
-#### Mission style
-- Mission is prepared first in the GUI
+#### Mission flow
+- mission is prepared first in the GUI
 - **Manual takeoff**
-- The mission does **not** start immediately
-- The drone climbs manually
-- Once the drone reaches **4 metres altitude**, the planned mission begins automatically
+- the drone climbs under pilot control
+- once the drone reaches **4 metres altitude**, the mission begins automatically
+- mission execution is handled by the software
 - **Manual landing**
 
 #### Main idea
-This version combines pilot-supervised takeoff and landing with automatic mission execution only after a safe launch altitude is reached.
-
-#### Best use
-- practical field workflow
-- safer mission start sequencing
-- balancing human supervision with mission automation
+This version combines safer manual takeoff and landing with automatic mission travel after a valid launch altitude has been reached.
 
 ---
 
-## Comparison of the three versions
+## Quick comparison
 
-| Version | Takeoff | Mission Start | Mission Execution | Landing |
-|--------|--------|----------------|------------------|---------|
-| Version 1 | Manual | GUI toggle after takeoff | Automated by mission logic | Manual |
-| Version 2 | Automatic | GUI toggle | Fully automatic | Automatic |
-| Version 3 | Manual | Automatically begins after reaching 4 m altitude | Automated by mission logic | Manual |
-
----
-
-## Why these three versions were developed
-
-These three versions were created to explore different levels of automation and mission practicality.
-
-- **Version 1** focuses on simplicity and operator control
-- **Version 2** explores full automation through Raspberry Pi mission sequencing
-- **Version 3** represents a hybrid approach that is safer and more practical for real mission preparation
-
-This progression also reflects the engineering development of the project, where control authority, safety, feasibility, and usability were gradually refined.
+| Version | Takeoff | Mission Start | Mission Travel | Landing |
+|--------|--------|----------------|----------------|---------|
+| Version 1 | Manual | Started manually in GUI after takeoff | Automated | Manual |
+| Version 2 | Automatic | Started in GUI | Fully automatic | Automatic |
+| Version 3 | Manual | Starts automatically after reaching 4 m | Automated | Manual |
 
 ---
 
-## Core hardware platform
+## Main code features
 
-The software in this repository was developed around the following hardware architecture:
+Depending on the version, the system supports:
 
-- **Pixhawk 6C**
-- **Raspberry Pi 5**
-- **GPS**
-- **Telemetry module**
-- **Payload release servo**
-- **Pi Camera**
-- **Onboard display**
-- **Medical delivery drone frame and propulsion system**
-
----
-
-## Main engineering idea
-
-The key system idea is to combine:
-
-- **stable low-level flight control** from the flight controller
-- **higher-level mission logic** from the Raspberry Pi
-- **different levels of operator involvement** depending on the software version
-
-This makes the repository useful not only as a final implementation archive, but also as a record of design evolution and engineering trade-off decisions.
+- live Pixhawk telemetry
+- Raspberry Pi GUI
+- GPS waypoint travel
+- dead reckoning mission mode
+- payload release
+- recording / mission evidence
+- return-to-start logic
+- transmitter override switching
+- altitude-gated mission start in the advanced hybrid version
 
 ---
 
-## Intended use
+## Important setup note — change the Pixhawk serial ID first
 
-This repository is intended for:
+Before running the program, you **must edit the `PORT` variable in the Python file** to match your own Pixhawk serial device.
 
-- final year project documentation
-- software version archiving
-- engineering comparison between mission-control strategies
-- prototype validation and demonstration
+In the code, it currently looks like this:
 
----
-
-## Safety note
-
-This repository is for academic and prototype development purposes.
-
-Any real drone testing must be carried out only under:
-
-- controlled conditions
-- proper supervision
-- safe bench-testing procedures
-- appropriate regulatory compliance
-
----
-
-## Author
-
-**Phone Myat Thu**  
-Final Year Project  
-**Medical Drone for Critical Supply Transport**
+```python
+PORT = "/dev/serial/by-id/usb-Holybro_Pixhawk6C_29004B001051333235363832-if00"
