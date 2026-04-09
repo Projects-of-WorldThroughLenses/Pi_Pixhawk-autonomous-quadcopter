@@ -1,4 +1,54 @@
 #!/usr/bin/env python3
+Medical Delivery Drone GCS v50 Light  —  PyQt5 Edition
+====================================================
+Major revision from v10.4:
+  • FIXED (v11.4): GPS and Dead Reckoning are both fully local Pi
+    go-to controllers. Pixhawk is used only for telemetry + stabilised
+    flight in the TX-selected mode.
+  • FIXED: Operator Abort now means "stop this go-to here" while keeping
+    Pi keyboard control available immediately if the override switch
+    remains ON. No forced TX hand-back is done on operator abort.
+  • FIXED (v11.3): Camera Module 3 NoIR colour path corrected
+    for this setup. The preview now uses the sensor's native bytes by
+    default, with an optional R/B swap toggle if a specific Pi build
+    still shows reversed colours.
+  • FIXED: heading=0 (north) no longer kills GPS autopilot
+  • FIXED: GUI no longer freezes during override release
+  • FIXED: import inside paintEvent moved to module level
+  • IMPROVED: Cleaner, more polished dark UI
+  • IMPROVED: Colour-check swatches shown for first 5 seconds
+  • IMPROVED: Better code structure and comments
+
+CORE PRINCIPLE — Pi is a joystick, not a flight controller
+  The Pi NEVER calls set_mode().  The Pixhawk's flight mode is
+  always owned by the TX switch.  Pi only nudges ch1/ch2/ch4
+  (roll/pitch/yaw) as if it were the right and left sticks of a
+  transmitter.  Motor mixing, stabilisation, altitude hold, RTL,
+  Loiter — all of that stays in Pixhawk / ArduPilot as normal.
+
+OVERRIDE SWITCH (TX channel 9 by default)
+  • Switch LOW  (< 1300 PWM) → Pi sends NO_OVERRIDE on all channels.
+    TX has 100% control.  Pi is invisible to Pixhawk.
+  • Switch HIGH (> 1700 PWM) → Pi overrides ch1 / ch2 / ch4 only.
+    TX still controls ch3 (throttle) and flight mode.
+
+GPS + DEAD RECKONING — local Pi go-to logic, NO GUIDED mode
+  The Pi reads telemetry from Pixhawk, computes bearing / yaw error /
+  distance remaining, then sends only ch1/ch2/ch4 stick-style RC
+  overrides. Pixhawk stays in the TX-selected mode and handles
+  stabilisation, altitude hold, motor mixing, etc.
+
+ABORT + RETURN BEHAVIOUR (v50 Light)
+  Operator Abort still stops only the current GPS/DR go-to. If the override
+  switch is still ON, the Pi remains available for immediate keyboard
+  control and simply returns ch1/ch2/ch4 to neutral.
+
+RETURN TO START (v50 Light)
+  Optional auto-return can be enabled independently for GPS and Dead
+  Reckoning. The Pi records the mission start position locally and, after
+  reaching the outbound target, computes a return leg back to that start
+  position using only local telemetry + RC stick simulation.
+"""
 import os
 import sys
 import time
