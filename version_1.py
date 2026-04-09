@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""
 Medical Delivery Drone GCS v50 Light  —  PyQt5 Edition
 ====================================================
 Major revision from v10.4:
