@@ -58,6 +58,8 @@ Recommended contents:
 - important PDF references
 
 ### `Prototype_1`
+### `Prototype_2`
+
 Simplest pilot-supervised mission version.
 
 Mission style:
@@ -65,7 +67,7 @@ Mission style:
 - GUI-triggered mission after stable takeoff
 - Manual landing
 
-### `Prototype_2`
+
 Fully automated Raspberry Pi mission version.
 
 Mission style:
