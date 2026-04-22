@@ -1,10 +1,27 @@
 # Medical Delivery Drone Project
 
-This repository contains the mission-control software developed for my final year project:
+This repository contains the mission-control software and technical documentation developed for my final year project:
 
 **Medical Drone for Critical Supply Transport**
 
-The project explores how a Raspberry Pi and Pixhawk-based drone can be used for medical payload delivery through different levels of automation and operator involvement.
+The project explores how a Raspberry Pi and Pixhawk-based drone can be used for medical payload delivery through different levels of automation, operator involvement, and platform scalability.
+
+---
+
+## Important reading
+
+Before reviewing the branch files, please read:
+
+**High Importance_Amperage Calculation.pdf**
+
+This document contains a detailed propulsion-current analysis, including:
+- measured versus theoretical current-draw comparison
+- RPM-to-current cubic relationship
+- scaling effects of motor KV, voltage, prop diameter, pitch, and blade count
+- comparative discussion of three-blade and two-blade configurations
+- technical appendix material prepared in academic report format
+
+This file is important because it explains the electrical and aerodynamic reasoning behind the propulsion choices and benchmark calculations used in this repository.
 
 ---
 
@@ -25,64 +42,55 @@ The software is built around a **Pixhawk + Raspberry Pi architecture**:
 
 ---
 
-## Software versions
+## Repository branch structure
 
-This repository contains three main mission-control styles.
+This repository is organised into multiple branches for different prototype stages.
 
-### Version 1 — Simplest Version
-This is the simplest and most pilot-supervised version.
+### `main`
+Main documentation and shared project material.
 
-#### Mission flow
-- **Manual takeoff**
-- once airborne, the mission is started using the GUI
-- mission travel is then handled by the software
-- **Manual landing**
+Recommended contents:
+- project overview
+- README
+- final documentation
+- technical appendices
+- architecture diagrams
+- important PDF references
 
-#### Main idea
-The pilot remains responsible for the most critical phases of flight, while the software handles mission execution after the aircraft is already safely in the air.
+### `Prototype_1`
+Simplest pilot-supervised mission version.
 
----
+Mission style:
+- Manual takeoff
+- GUI-triggered mission after stable takeoff
+- Manual landing
 
-### Version 2 — Fully Automated Raspberry Pi Version
-This is the most automated version.
+### `Prototype_2`
+Fully automated Raspberry Pi mission version.
 
-#### Mission flow
-- mission is started from the GUI
-- **Automatic takeoff**
-- **Automatic mission execution**
-- **Automatic landing**
+Mission style:
+- GUI-triggered mission
+- Automatic takeoff
+- Automatic mission execution
+- Automatic landing
 
-#### Main idea
-This version explores a more fully autonomous workflow where the Raspberry Pi handles the complete mission sequence.
+### `hexacopter_prototype_1`
+Hexacopter-oriented prototype branch for larger payload and scaling study.
 
-#### Note
-This version is more experimental because it reduces pilot involvement significantly.
-
----
-
-### Version 3 — Altitude-Gated Mission Start Version
-This is the most versatile hybrid version.
-
-#### Mission flow
-- mission is prepared first in the GUI
-- **Manual takeoff**
-- the drone climbs under pilot control
-- once the drone reaches **4 metres altitude**, the mission begins automatically
-- mission execution is handled by the software
-- **Manual landing**
-
-#### Main idea
-This version combines safer manual takeoff and landing with automatic mission travel after a valid launch altitude has been reached.
+Main idea:
+- platform-scaling study
+- heavier payload direction
+- propulsion and structural comparison against quadrotor implementation
 
 ---
 
 ## Quick comparison
 
-| Version | Takeoff | Mission Start | Mission Travel | Landing |
-|--------|--------|----------------|----------------|---------|
-| Version 1 | Manual | Started manually in GUI after takeoff | Automated | Manual |
-| Version 2 | Automatic | Started in GUI | Fully automatic | Automatic |
-| Version 3 | Manual | Starts automatically after reaching 4 m | Automated | Manual |
+| Branch | Platform idea | Takeoff | Mission start | Mission travel | Landing |
+|--------|---------------|---------|----------------|----------------|---------|
+| `Prototype_1` | Simplest operational version | Manual | Started manually in GUI after takeoff | Automated | Manual |
+| `Prototype_2` | Highest automation version | Automatic | Started in GUI | Fully automatic | Automatic |
+| `hexacopter_prototype_1` | Scaled heavy-payload direction | Depends on implementation stage | Depends on implementation stage | Depends on implementation stage | Depends on implementation stage |
 
 ---
 
@@ -98,7 +106,7 @@ Depending on the version, the system supports:
 - recording / mission evidence
 - return-to-start logic
 - transmitter override switching
-- altitude-gated mission start in the advanced hybrid version
+- altitude-gated mission start in the hybrid version
 
 ---
 
@@ -106,7 +114,7 @@ Depending on the version, the system supports:
 
 Before running the program, you **must edit the `PORT` variable in the Python file** to match your own Pixhawk serial device.
 
-In the code, it currently looks like this:
+Example:
 
 ```python
 PORT = "/dev/serial/by-id/usb-Holybro_Pixhawk6C_29004B001051333235363832-if00"
