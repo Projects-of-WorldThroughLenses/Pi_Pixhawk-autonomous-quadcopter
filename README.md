@@ -2,6 +2,8 @@
 
 A professional PyQt5-based drone monitoring dashboard designed for Pixhawk / ArduPilot / PX4-style telemetry systems. The dashboard combines low-latency FPV video monitoring, MAVLink telemetry, an artificial horizon / gyro ball, live GPS map tracking, RC channel monitoring, flight timer automation, and an engineering-style battery / flight-time estimator in one operator interface.
 
+Link to the video: https://youtube.com/shorts/tJHU7n9iY3g?si=jQgzL-qaclmFdqmQ
+
 > **Important safety note:**  
 > This software is designed as a monitoring, recording, and estimation dashboard. It does **not** arm, disarm, take off, land, or directly command the aircraft. Flight control authority remains with the pilot, transmitter, and flight controller.
 
