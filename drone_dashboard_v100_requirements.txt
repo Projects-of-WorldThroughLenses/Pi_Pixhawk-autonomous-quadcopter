@@ -1,0 +1,8 @@
+PyQt5
+PyQtWebEngine
+opencv-python
+numpy
+pymavlink
+pygame
+ultralytics
+pyserial
