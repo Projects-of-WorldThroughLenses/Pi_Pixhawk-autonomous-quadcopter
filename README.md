@@ -92,7 +92,7 @@ Main idea:
 |--------|---------------|---------|----------------|----------------|---------|
 | `Prototype_1` | Simplest operational version | Manual | Started manually in GUI after takeoff | Automated | Manual |
 | `Prototype_2` | Highest automation version | Automatic | Started in GUI | Fully automatic | Automatic |
-| `hexacopter_prototype_1` | Scaled heavy-payload direction | Depends on implementation stage | Depends on implementation stage | Depends on implementation stage | Depends on implementation stage |
+| `16kg_cinelifter_quad_project` | Scaled heavy-payload direction | Depends on implementation stage | Depends on implementation stage | Depends on implementation stage | Depends on implementation stage |
 
 ---
 
