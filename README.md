@@ -13,5 +13,11 @@ for now,
 - H-Flow (optical flow + Lidar)
 - Holybro M10 915MHz telemetry module for command control and live flight data on ground control station. 
 - Foxeer Razer Mini V3 + SpeedyBee TX800 for computer vision on ground control station.
-- 6s 3300mah li-po
+- 6s 3300mAh li-po
 - HTX4-15 frame
+
+components to upgrade when budget allows,
+- 3115 900kV -> 4270 430kV
+- 10 in props -> 15in carbon fibre props
+- 65a -> 80a
+- 6s 3300mah -> 6s 12000mah
